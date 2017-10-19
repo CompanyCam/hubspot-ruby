@@ -94,13 +94,11 @@ module Hubspot
 
   class FormsConnection < Connection
     follow_redirects true
-    debug_output Hubspot::Config.logger
 
     def self.submit(path, opts)
       url = generate_url(path, opts[:params], { base_url: 'https://forms.hubspot.com', hapikey: false })
-      response = post(url, body: opts[:body], headers: { 'Content-Type' => 'application/x-www-form-urlencoded' })
-      log_request_and_response url, response, opts[:body]
-      response
+      body = CGI.escape(opts[:body].map{|k,v| "#{k}=#{v}"}.join("&"))
+      post(url, body: body, headers: { 'Content-Type' => 'application/x-www-form-urlencoded' })
     end
   end
 end
