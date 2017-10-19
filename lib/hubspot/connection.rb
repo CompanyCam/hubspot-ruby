@@ -94,6 +94,7 @@ module Hubspot
 
   class FormsConnection < Connection
     follow_redirects true
+    debug_output Hubspot::Config.logger
 
     def self.submit(path, opts)
       url = generate_url(path, opts[:params], { base_url: 'https://forms.hubspot.com', hapikey: false })
