@@ -97,7 +97,9 @@ module Hubspot
 
     def self.submit(path, opts)
       url = generate_url(path, opts[:params], { base_url: 'https://forms.hubspot.com', hapikey: false })
-      post(url, body: opts[:body], headers: { 'Content-Type' => 'application/x-www-form-urlencoded' })
+      response = post(url, body: opts[:body], headers: { 'Content-Type' => 'application/x-www-form-urlencoded' })
+      log_request_and_response url, response, opts[:body]
+      response
     end
   end
 end
